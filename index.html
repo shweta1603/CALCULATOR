@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+   <div id="calculator-container">
+       <div id="display-box">
+           <span id="display" style="margin:10px">0</span>
+       </div>
+       <div id="controls">
+          <div id="operators">
+              <button class="control-button" onclick="fractionFunc('frac')">
+                 1/x 
+              </button>
+              <button class="control-button" onclick="sqreFunc('sqre')">
+                x<sub>2</sub>
+             </button>
+             <button class="control-button" onclick="sqrtFunc('sqrt')">
+                &#x221A;x
+             </button>
+             <button class="control-button" onclick="controlsFunc('/')">
+                / 
+             </button> 
+          </div>
+           <div class="digits">
+               <button class="digit-button" onclick=
+               "digitFunc('7')">
+                    7
+               </button>
+               <button class="digit-button" onclick="digitFunc('8')">
+                    8
+               </button>
+               <button class="digit-button" onclick="digitFunc('9')">
+                    9
+               </button>
+               <button class="control-button" onclick="controlsFunc('*')">
+                     *
+               </button>
+           </div>
+           <div class="digits">
+            <button class="digit-button" onclick="digitFunc('4')">
+                 4
+            </button>
+            <button class="digit-button" onclick="digitFunc('5')">
+                 5
+            </button>
+            <button class="digit-button" onclick="digitFunc('6')">
+                 6
+            </button>
+            <button class="control-button" onclick="controlsFunc('-')">
+                  -
+            </button>
+        </div> 
+        <div class="digits">
+            <button class="digit-button" onclick="digitFunc('1')">
+                 1
+            </button>
+            <button class="digit-button" onclick="digitFunc('2')">
+                 2
+            </button>
+            <button class="digit-button" onclick="digitFunc('3')">
+                  3
+            </button>
+            <button class="control-button" onclick="controlsFunc('+')">
+                  +
+            </button>
+        </div>
+        <div id="operators-down" class="digits">
+            <button class="digit-button" onclick="clearFunc()">
+                 C
+            </button>
+            <button class="digit-button" onclick="digitFunc('0')">
+                 0
+            </button>
+            <button class="digit-button" onclick="digitFunc('dec')">
+                  .
+            </button>
+            <button class="control-button" onclick="evaluateFunction()">
+                  =
+            </button>
+        </div>
+   </div>
+   </div>
+
+   <script> 
+    
+       let operand1='';
+       let operand2='';
+       let operator='';
+
+       function currentDisplay(){
+           document.getElementById("display").innerText = operand1 + operator + operand2;
+       }
+      
+      //storing the operant(num)
+       function digitFunc(num){
+           console.log("typed",num);
+            if(operand1==='' || operator === ''){
+                if(num==='dec'){
+                    num='.';
+                }
+             operand1=operand1 + num;
+             console.log("operand1", operand1);
+             currentDisplay();
+                 return;
+            } 
+            //operand2
+            if(num==='dec'){
+                    num='.';
+                } 
+         operand2 = operand2 + num;
+         console.log("operand2",operand2);
+         currentDisplay();
+       }
+      //updating the operator
+       function controlsFunc(operatorInput){
+          operator = operatorInput;
+          currentDisplay();
+       }
+
+        function clearFunc(){
+             operand1='';     
+             operand2='';
+             operator='';
+             document.getElementById("display").innerText='0';
+        }
+       function fractionFunc(){
+         if(operand1!==''){
+            document.getElementById("display").innerText=eval(1/operand1);
+            operand1='';    
+         }
+       }
+       function sqreFunc(){
+          operand2=operand1;
+          operator= '*' ;
+           evaluateFunction();
+       } 
+      function sqrtFunc(){
+          document.getElementById("display").innerText=Math.pow(parseInt(operand1),1/2);
+          operand1=''; 
+      }
+       function evaluateFunction(){  // =
+           if(operand1 !=='' && operand2!=='' && operator!==''){
+               let parsedOperand1=parseFloat(operand1); //converting string to integer
+               let parsedOperand2=parseFloat(operand2);
+               let finalAnswer= eval(parsedOperand1 + operator + parsedOperand2);
+               document.getElementById("display").innerText= finalAnswer;
+              
+                operand1=finalAnswer;
+                operand2='';
+                operator='';
+                console.log("answer",finalAnswer);
+           }
+       }
+   </script>
+
+</body>
+</html>
